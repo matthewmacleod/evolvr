@@ -5,7 +5,7 @@ Evolve
 Introduction
 --------------
 
-The evolve project is to create a massively parallel bioinformatics package which utilizes machine learning techniques.
+The evolve project goal is to create a massively parallel bioinformatics package which utilizes machine learning techniques.
 
 TODO
 --------------
