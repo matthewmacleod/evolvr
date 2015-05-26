@@ -1,16 +1,21 @@
 defmodule Bio do
 
-  def get_kmers("", _k) do
+  def get_all_kmers("", _k) do
     []
   end
 
-  def get_kmers(seq, k) do
+  def get_all_kmers(seq, k) do
     ht = String.split_at(seq, k)
     head = elem(ht, 0)
-    tail = elem(ht, 1)
-    [ head | get_kmers(tail, k) ]
+    htt = String.split_at(seq, 1)
+    tail = elem(htt, 1)
+    [ head | get_all_kmers(tail, k) ]
   end
 
+  def get_kmers(seq, k) do
+    ks = get_all_kmers(seq, k)
+    Enum.filter(ks, fn(x) -> String.length(x) == k end)
+  end
 
   def count_pattern([], _pattern, total) do
     total
