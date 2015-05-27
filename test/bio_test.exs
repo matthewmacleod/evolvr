@@ -2,7 +2,7 @@
 import Evolve.Bio
 
 defmodule BioTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "should return count of a particular pattern in a sequence where count includes overlaps" do
     assert pattern_count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT") == 3
@@ -14,5 +14,9 @@ defmodule BioTest do
     assert get_kmers(seq, 3) == all_kmers
   end
 
+  test "should return most frequent kmers in sequence" do
+    seq = "ACGTTGCATGTCGCATGATGCATGAGAGCT"
+    assert frequent_words(seq, 4) == ["CATG", "GCAT"]
+  end
 
 end

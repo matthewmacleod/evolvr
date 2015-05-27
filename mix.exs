@@ -4,6 +4,7 @@ defmodule Evolve.Mixfile do
   def project do
     [app: :evolve,
      version: "0.0.1",
+     name: "Evolve",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -29,6 +30,8 @@ defmodule Evolve.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      { :ex_doc, github: "elixir-lang/ex_doc" }
+    ]
   end
 end
