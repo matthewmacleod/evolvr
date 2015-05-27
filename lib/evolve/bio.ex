@@ -1,4 +1,4 @@
-defmodule Bio do
+defmodule Evolve.Bio do
 
   def get_all_kmers("", _k) do
     []

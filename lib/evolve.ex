@@ -33,10 +33,13 @@ defmodule Evolve do
     IO.inspect data_list
 
     [seq,k] = data_list
+    ik = String.to_integer(k)
     IO.inspect seq
+    kmers = Evolve.Bio.get_kmers(seq,ik)
+    IO.puts "getting kmers for k = #{k}..."
+    IO.inspect kmers
 
   end
-
 
 
   defp parse_args(args) do

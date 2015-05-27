@@ -1,5 +1,5 @@
 
-import Bio
+import Evolve.Bio
 
 defmodule BioTest do
   use ExUnit.Case
