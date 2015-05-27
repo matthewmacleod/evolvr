@@ -37,10 +37,18 @@ defmodule Evolve do
     IO.inspect seq
     kmers = Evolve.Bio.get_kmers(seq,ik)
     IO.puts "getting kmers for k = #{k}..."
-    IO.inspect kmers
+    print(kmers)
+    vertical_print(kmers)
 
   end
 
+  defp print(my_list) do
+    IO.puts Enum.join(my_list," ")
+  end
+
+  defp vertical_print(my_list) do
+    IO.puts Enum.join(my_list,"\n")
+  end
 
   defp parse_args(args) do
     {options, _, _} = OptionParser.parse(args,
