@@ -7,6 +7,7 @@ defmodule Evolve.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     escript: [main_module: Evolve],
      deps: deps]
   end
 

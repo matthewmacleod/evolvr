@@ -16,4 +16,34 @@ defmodule Evolve do
     opts = [strategy: :one_for_one, name: Evolve.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def main(args) do
+    options = parse_args(args)
+    IO.puts "Running evolve bioinformatics program..."
+    IO.puts " using these options:"
+    IO.inspect options
+    IO.puts "input file = "
+    IO.inspect  options[:input]
+    infile = options[:input]
+
+    data = File.read!(infile)
+    IO.inspect data
+    cdata = String.replace(data, "\n", "")
+    data_list = String.split(cdata, "\r", trim: true)
+    IO.inspect data_list
+
+    [seq,k] = data_list
+    IO.inspect seq
+
+  end
+
+
+
+  defp parse_args(args) do
+    {options, _, _} = OptionParser.parse(args,
+      switches: [n: :integer, url: :string]
+    )
+    options
+  end
+
 end
