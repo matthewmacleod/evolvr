@@ -26,8 +26,10 @@ type:
 Running Code
 --------------
 * to build:
+
             mix escript.build
 
 * to run:
+
            ./evolve –input=input
 
