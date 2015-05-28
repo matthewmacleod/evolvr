@@ -8,9 +8,10 @@ defmodule Evolve.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     escript: [main_module: Evolve],
+     escript: escript_config,
      deps: deps]
   end
+
 
   # Configuration for the OTP application
   #
@@ -33,5 +34,9 @@ defmodule Evolve.Mixfile do
     [
       { :ex_doc, github: "elixir-lang/ex_doc" }
     ]
+  end
+
+  defp escript_config do
+    [ main_module: Evolve.CLI ]
   end
 end
