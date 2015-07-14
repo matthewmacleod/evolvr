@@ -31,5 +31,5 @@ Running Code
 
 * to run:
 
-           ./evolve –input=input
+           ./evolve --input=input
 

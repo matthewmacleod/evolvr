@@ -8,7 +8,7 @@ defmodule Evolve.CLI do
   def process(input) do
     options = input
     IO.puts "Running evolve bioinformatics program..."
-    IO.puts " using these options:"
+    IO.puts "\tusing these options:"
     IO.inspect options
     IO.puts "input file = "
     IO.inspect  options[:input]
@@ -23,10 +23,16 @@ defmodule Evolve.CLI do
     [seq,k] = data_list
     ik = String.to_integer(k)
     IO.inspect seq
-    kmers = Evolve.Bio.get_kmers(seq,ik)
-    IO.puts "getting kmers for k = #{k}..."
+
+    IO.puts "\tgetting frequent words for k = #{k}..."
+    kmers = Evolve.Bio.frequent_words(seq,ik)
     print(kmers)
-    vertical_print(kmers)
+  end
+
+
+  defp print_map(m) do
+    #m |> Dict.keys |> Enum.map(fn(x) ->  Atom.to_string(x) |> String.upcase end) |> vertical_print
+    m |> Dict.keys |> Enum.map(fn(x) ->  Atom.to_string(x) |> String.upcase end) |> print
   end
 
   defp print(my_list) do
@@ -43,4 +49,5 @@ defmodule Evolve.CLI do
     )
     options
   end
+
 end
