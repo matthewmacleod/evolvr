@@ -95,13 +95,37 @@ defmodule Evolve.Maths do
 
   ## matrices ##
 
+  @doc"""
+  Input:  matrix (list of lists format)
+  Output: [number of rows, number of columns]
+  """
+  def shape(mat) do
+    [length(mat), length(List.first(mat))]
+  end
+
+  @doc"""
+  Input:  matrix (list of lists format) and ith row (zero indexed)
+  Output: [row_i]
+  """
+  def get_row(mat,i) do
+    Enum.at(mat,i)
+  end
+
+  @doc"""
+  Input:  matrix (list of lists format) and jth column (zero indexed)
+  Output: [column_j]
+  """
+  def get_column(mat,j) do
+    for x <- mat, do: Enum.at(x,j) # generator yields rows(x) nicely
+  end
+
+
 
   ### statistics math ###
 
   def mean(list) do
     sum(list) / length(list)
   end
-
 
   @doc"""
   Input:  list of numbers
@@ -124,14 +148,32 @@ defmodule Evolve.Maths do
     end
   end
 
+  @doc"""
+  Input:  list of numbers, list percent at which want value
+  Output: value percent value (from sorted list)
+  NB generalization of median
+  """
+  def quantile(list,p) do
+    p_index = round(p*length(list))
+    sorted_list = Enum.sort(list)
+    Enum.at(sorted_list, p_index)
+  end
+
   def data_range(list) do
     Enum.max(list) - Enum.min(list)
   end
 
-  def mode(list) do
+  @doc"""
+    Input: list and element to count
+    Output: number of times element occurs in list
+  """
+  def counts(x,list) do
+    Enum.reduce(list, 0, fn(y, acc) -> if x==y, do: acc + 1, else: acc end)
   end
 
-  def quantile() do
+  def mode(list) do
+    max_freq = Enum.max_by(list, fn(x) -> counts(x,list) end) |> counts(list)
+    Enum.filter(list, fn(x) -> counts(x,list) == max_freq end) |> Enum.uniq
   end
 
   def interquartile_range(list) do
