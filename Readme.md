@@ -4,17 +4,16 @@ Evolve
 Introduction
 --------------
 
-The evolve project goal is to create a massively parallel bioinformatics package which utilizes
-* machine learning techniques
-* genetic algorithms
-* metaprogramming
+The evolve project goal is to create a massively parallel machine learning package which utilizes
+* various machine learning techniques
+* bioinformatics
 
 TODO
 --------------
+* Add maths library
+* Add machine learning library
 * Add basic bioinformatic techniques
-* Add tests
 * Add concurrency
-* Add machine learning
 
 
 Running Tests
