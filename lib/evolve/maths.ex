@@ -23,6 +23,16 @@ defmodule Evolve.Maths do
   end
 
   @doc"""
+  Input: numerator, denominator
+  Output: float
+  NB this is a bit of a hack so can pass around in functional style
+  """
+  def divide(numerator, denominator) do
+    numerator / denominator
+  end
+
+
+  @doc"""
   Input:  two numbers: a,b
   Output: a^b = float
   NB this can give fractional powers as well,
@@ -176,19 +186,42 @@ defmodule Evolve.Maths do
     Enum.filter(list, fn(x) -> counts(x,list) == max_freq end) |> Enum.uniq
   end
 
-  def interquartile_range(list) do
+  def from_mean(list) do
+    avg = mean(list)
+    for x <- list, do: x - avg
   end
 
-  def from_mean() do
-  end
-
-  def variance() do
+  def variance(list) do
+    n = length(list)
+    list |> from_mean |> sum_of_squares |> divide(n-1)
   end
 
   def standard_deviation(list) do
+    sqrt(variance(list))
   end
 
+  def interquartile_range(list) do
+    quantile(list,0.75) - quantile(list,0.25)
+  end
+
+  def covariance(x,y) do
+    n = length(x)
+    dot(from_mean(x),from_mean(y)) |> divide(n-1)
+  end
+
+  @doc"""
+  Input: two vectors
+  Output: correlation
+  NB result should lie between -1 (anti-correlated) and 1 (perfect correlation)
+  """
   def correlation(x,y) do
+    std_dev_x = standard_deviation(x)
+    std_dev_y = standard_deviation(y)
+    if std_dev_x > 0 && std_dev_y > 0 do
+      covariance(x,y) / std_dev_x / std_dev_y
+    else
+      0
+    end
   end
 
   ### probability math ###

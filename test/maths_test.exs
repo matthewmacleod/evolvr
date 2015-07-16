@@ -98,6 +98,18 @@ defmodule MathsTest do
     assert mode([0,1,1,2,3,3,4]) == [1,3]
   end
 
+  test "should give componentwise difference from mean" do
+    assert from_mean([1,3,2,4]) == [-1.5,0.5,-0.5,1.5]
+  end
+
+  test "should return variance" do
+    assert Float.round(variance([1,3,2,4]),3) == 1.667
+  end
+
+  test "should return standard deviations" do
+    assert Float.round(standard_deviation([1,3,2,4]),3) == 1.291
+  end
+
 
   ### probability tests ###
 
