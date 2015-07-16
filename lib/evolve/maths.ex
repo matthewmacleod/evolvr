@@ -226,7 +226,38 @@ defmodule Evolve.Maths do
 
   ### probability math ###
 
+  @doc"""
+  Input: number
+  Output: value in uniform cumulative distribution function
+  """
+  def uniform_cdf(x) do
+    cond do
+       x < 0  -> 0
+       x < 1  -> x
+       x >= 1 -> 1
+    end
+  end
 
+  @doc"""
+  Input: number
+  Output: value in normal probability distribution function
+  NB when mu = 0, and sigma = 1, returns standard normal distribution value
+     also exp, pow, and sqrt are from erlang
+  """
+  def normal_pdf(x, mu, sigma) do
+    prefactor = 1 / sqrt(2 * pi * sigma)
+    prefactor * exp(-1 * pow((x - mu),2) / (2 * pow(sigma,2)))
+  end
+
+  @doc"""
+  Input: number
+  Output: value in normal cumulative distribution function
+  NB exp, pow, sqrt, erf are from erlang
+     erf(X) = 2/sqrt(pi)*integral from 0 to X of exp(-t*t) dt.
+  """
+  def normal_cdf(x, mu, sigma) do
+    (1 + erf((x - mu) / sqrt(2) / sigma)) / 2
+  end
 
 
   ### machine learning math ###

@@ -113,8 +113,17 @@ defmodule MathsTest do
 
   ### probability tests ###
 
+  test "should return uniform cumulative distribution value" do
+    assert uniform_cdf(0.8) == 0.8
+  end
 
+  test "should return normal probability distribution value" do
+    assert Float.round(normal_pdf(0,0,1),4) == 0.3989
+  end
 
+  test "should return normal cumulative distribution value" do
+    assert normal_cdf(0,0,1) == 0.5
+  end
 
   ### machine learning tests ###
 

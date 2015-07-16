@@ -5,28 +5,30 @@ Introduction
 --------------
 
 The evolve project goal is to create a massively parallel machine learning package which utilizes
-* various machine learning techniques
-* bioinformatics
+* various general machine learning techniques
+* bioinformatic algorithms
 
 TODO
 --------------
-* Add maths library
-* Add machine learning library
-* Add basic bioinformatic techniques
-* Add concurrency
+* maths library
+* machine learning library
+* utilities -plotting interface to R
+* basic bioinformatic techniques
+* concurrency
 
 
 Running Tests
 --------------
 type:
-             mix test
+
+           mix test
 
 
 Running Code
 --------------
 * to build:
 
-            mix escript.build
+           mix escript.build
 
 * to run:
 
@@ -35,4 +37,7 @@ Running Code
 Documentation
 --------------
 generate project documentation with:
+
            mix docs
+
+to run doc tests:
