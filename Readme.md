@@ -19,7 +19,7 @@ TODO
 Running Tests
 --------------
 type:
-  mix test
+             mix test
 
 
 Running Code
@@ -34,4 +34,5 @@ Running Code
 
 Documentation
 --------------
-
+generate project documentation with:
+           mix docs
