@@ -1,0 +1,89 @@
+\documentclass[jcp,aip,amsmath]{revtex4-1}
+\usepackage{xcolor,array}
+\usepackage{color}
+\usepackage{txfonts}
+
+\newcommand{\half}{\textstyle \frac{1}{2}}
+\newcommand{\quarter}{\textstyle \frac{1}{4}}
+
+
+% note, to complile, do something like:
+%#!/bin/bash
+%file=$1
+%rm ``$file''.aux
+%latex ``$file''.tex
+%bibtex ''$file"
+%latex ``$file".tex
+%latex ''$file".tex
+%dvips -Ppdf -o ``$file".ps "$file".dvi
+%ps2pdf ``$file".ps
+%echo  `` done compiling $file''
+%mupdf "$file.pdf" &
+
+
+
+\begin{document}
+
+
+
+\title{Evolve Equations}
+\author{Matthew K. MacLeod}
+\maketitle
+\today
+
+\section{Maths.ex}
+The code for following equations is located in lib/evolve/maths.ex
+
+\subsection{Linear Algebra}
+dot product for two vectors,
+\begin{align}
+\mathbf{A} \cdot \mathbf{B} = A^\dag B = \sum_i^n A_i * B_i
+\end{align}
+
+\subsection{Statistics}
+
+standard deviation, $\sigma$, is defined as, the square root of the variance
+\begin{align}
+\sigma = \sqrt{v} =  \sqrt{\frac{1}{n}\sum_i^n (x_i - \mu)^2}
+\end{align}
+where the mean, $\mu$, is defined as
+\begin{align}
+\mu = \frac{1}{n} \sum_i^n x_i
+\end{align}
+
+\subsection{Probability}
+ The normal probability distribution (normal\_pdf in code), the famous bell-shaped curve is
+defined as
+\begin{align}
+f(x|\mu,\sigma) = \frac{1}{\sqrt{2\pi\sigma}}\mathrm{exp}\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\end{align}
+and $\mu$ is again the mean.
+
+The beta distribution can be used for Bayesian inference (conditional probabilities) and is defined
+\begin{align}
+\mathrm{beta\_pdf} = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta}
+\end{align}
+
+where $B(\alpha,\beta)$ is a normalization constant to ensure that the total probability integrates to 1.
+and is
+\begin{align}
+B(\alpha,\beta) = \frac{\Gamma(\alpha) \Gamma(\beta) }{\Gamma(\alpha + \beta)}
+\end{align}
+This function uses the gamma function, which is the generalization of a factorial, and which is approximated in the code using Windschitl reworking of Stirlings as follows
+\begin{align}
+\Gamma(t) = \int_0^{\infty} x^{t-1} e^{-x} dx \approx  \sqrt{\frac{2\pi}{t}}\left(\frac{1}{e}\left(t + \frac{1}{12t -\frac{1}{10t}}\right)\right)^t
+\end{align}
+
+Note, especially for easy testing, positive integers should follow
+\begin{align}
+\Gamma(n)=(n-1)!
+\end{align}
+
+
+
+
+
+\subsection{Machine Learning}
+
+
+\end{document}
