@@ -12,7 +12,7 @@ defmodule Evolve.Maths do
   # nb erlang import, has pi,log,log2,log10,exp,pow,...etc
   import :math
 
-  ### basic math ###
+  ### basic maths ###
 
   @doc"""
   Input:  a list of numbers
@@ -23,14 +23,13 @@ defmodule Evolve.Maths do
   end
 
   @doc"""
-  Input: numerator, denominator
+  Input:  numerator, denominator
   Output: float
   NB this is a bit of a hack so can pass around in functional style
   """
   def divide(numerator, denominator) do
     numerator / denominator
   end
-
 
   @doc"""
   Input:  two numbers: a,b
@@ -42,8 +41,11 @@ defmodule Evolve.Maths do
     pow(a,b)
   end
 
+  def factorial(n), do: factorial(n,1)
+  defp factorial(0,acc), do: acc
+  defp factorial(n,acc), do: factorial(n-1, acc*n)
 
-  ### linear algebra math ###
+  ### linear algebra maths ###
 
   ## vectors ##
 
@@ -131,7 +133,7 @@ defmodule Evolve.Maths do
 
 
 
-  ### statistics math ###
+  ### statistics maths ###
 
   def mean(list) do
     sum(list) / length(list)
@@ -224,7 +226,7 @@ defmodule Evolve.Maths do
     end
   end
 
-  ### probability math ###
+  ### probability maths ###
 
   @doc"""
   Input: number
@@ -257,6 +259,33 @@ defmodule Evolve.Maths do
   """
   def normal_cdf(x, mu, sigma) do
     (1 + erf((x - mu) / sqrt(2) / sigma)) / 2
+  end
+
+  @doc"""
+  Input: number
+  Output: value from approximate gamma function
+  NB approximating gamma function with Robert H. Windschitl approx.
+  has 8 digit accuracy with values larger than 8
+  https://en.wikipedia.org/wiki/Stirling%27s_approximation
+  https://en.wikipedia.org/wiki/Beta_distribution
+  """
+  def gamma(z) do
+    prefactor = sqrt(2*pi/z)
+    ez_inverse = z/exp(1)
+    inner = ez_inverse * sqrt( z*sinh(1/z) + 1/(810*pow(z,6)))
+    prefactor * pow(inner,z)
+  end
+
+  defp beta_factor(alpha, beta) do
+    gamma(alpha) * gamma(beta) / gamma(alpha+beta)
+  end
+
+  def beta_pdf(x, alpha, beta) do
+    cond do
+     x <= 0 -> 0
+     x >= 1 -> 0
+     x > 0 && x < 1 -> pow(x,alpha-1) * pow((1-x),(beta-1)) / beta_factor(alpha, beta)
+    end
   end
 
 
