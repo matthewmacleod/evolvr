@@ -4,6 +4,7 @@ defmodule MathsTest do
   use ExUnit.Case, async: true
 
   ### basic tests ###
+  import :math
 
   test "should return integer sum" do
     assert sum([1,2,3]) == 6
@@ -14,11 +15,11 @@ defmodule MathsTest do
   end
 
   test "should return cube" do
-    assert Float.round(power(3,3),0) == 27
+    assert round(pow(3,3)) == 27
   end
 
   test "should return square root" do
-    assert Float.round(power(4,1/2),0) == 2
+    assert round(pow(4,1/2)) == 2
   end
 
   ### linear algebra tests ###
@@ -49,6 +50,10 @@ defmodule MathsTest do
 
   test "should return distance between vectors" do
     assert distance([0,0,0],[0,3,4]) == 5
+  end
+
+  test "should return angle between vectors" do
+    assert Float.round(angle([9,2,7],[4,8,10]),3) == 38.229
   end
 
   ## matrix tests ##
@@ -137,6 +142,12 @@ defmodule MathsTest do
 
   ### machine learning tests ###
 
+  test "should partition a list" do
+    list = [1,2,3,4,5,6,7,8,9,10]
+    training = [1,2,3,4,5,6]
+    testing = [7,8,9,10]
+    assert create_data_partition(list,0.6) == {training,testing}
+  end
 
 
 

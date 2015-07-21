@@ -31,16 +31,6 @@ defmodule Evolve.Maths do
     numerator / denominator
   end
 
-  @doc"""
-  Input:  two numbers: a,b
-  Output: a^b = float
-  NB this can give fractional powers as well,
-     eg square roots
-  """
-  def power(a,b) do
-    pow(a,b)
-  end
-
   def factorial(n), do: factorial(n,1)
   defp factorial(0,acc), do: acc
   defp factorial(n,acc), do: factorial(n-1, acc*n)
@@ -100,9 +90,19 @@ defmodule Evolve.Maths do
   Input:  two vectors
   Output: distance between vectors (ie distance between points)
   NB vectors must be same length, todo add assertion
+  Aside, can use in KNN
   """
   def distance(v,w) do
     magnitude(vector_subtract(v,w))
+  end
+
+  @doc"""
+  Input:  two vectors
+  Output: angle between the angles given in degrees
+  Aside, could be useful in comparing 'overlap of vectors'
+  """
+  def angle(v,w) do
+    acos(dot(v,w) / (magnitude(v) * magnitude(w))) * 180.0 / pi
   end
 
   ## matrices ##
@@ -291,6 +291,12 @@ defmodule Evolve.Maths do
 
   ### machine learning math ###
 
+  def create_data_partition(list,percentage) do
+    p_index = round(percentage*length(list))
+    training = Enum.take(list,p_index)
+    testing = list -- training
+    {training,testing}
+  end
 
 
 
