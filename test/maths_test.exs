@@ -52,6 +52,10 @@ defmodule MathsTest do
     assert distance([0,0,0],[0,3,4]) == 5
   end
 
+  test "should return minkowoski distance between vectors" do
+    assert minkowski_distance([0,0,0],[0,3,4],2) == 5
+  end
+
   test "should return angle between vectors" do
     assert Float.round(angle([9,2,7],[4,8,10]),3) == 38.229
   end

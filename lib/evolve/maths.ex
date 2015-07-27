@@ -60,8 +60,8 @@ defmodule Evolve.Maths do
   end
 
   # scale vector
-  def scalar_multiply(c, v) do
-    Enum.map(v, &(&1 * c))
+  def scalar_multiply(constant, v) do
+    Enum.map(v, &(&1 * constant))
   end
 
   @doc"""
@@ -78,6 +78,10 @@ defmodule Evolve.Maths do
     dot(v,v)
   end
 
+  @doc"""
+  Input: vector
+  Output:  ||v||, aka Euclidean norm
+  """
   def magnitude(v) do
     sqrt(sum_of_squares(v))
   end
@@ -90,11 +94,41 @@ defmodule Evolve.Maths do
   Input:  two vectors
   Output: distance between vectors (ie distance between points)
   NB vectors must be same length, todo add assertion
-  Aside, can use in KNN
+  Aside, this is the Euclidean distance,
+  Also can use in KNN, maybe consider minkowski and mahalanobis as well
   """
   def distance(v,w) do
     magnitude(vector_subtract(v,w))
   end
+
+  @doc"""
+  Input:  two vectors and p parameter
+  Output: distance
+  NB p = 1 reduces to Taxicab distance, L1 norm
+     p = 2 recover Euclidean distance, L2 norm
+  """
+  def minkowski_distance(v,w,p) do
+    df = for {x,y} <- Enum.zip(v,w), do: abs(x - y)
+    a = sum(Enum.map(df, fn(x) -> pow(x,p) end))
+    pow(a, 1/p)
+  end
+
+  @doc"""
+  Input:  two vectors and p parameter
+  Output: distance
+  NB this function takes into consideration a volatility about each dimension,
+     via the standard deviation in dimensions, aka normalized Euclidean distance
+     also works better with 'squashed data collections',
+     eg better identify outliers in these distributions
+  """
+  def mahalanobis_distance(v,w) do
+    x_mean = mean(v)
+    y_mean = mean(w)
+    n = length(v) # not sure if need n-1
+    df = for {x,y} <- Enum.zip(v,w), do: pow(((x - y)/((x-x_mean)*(y-y_mean)*1/n)),2)
+    sqrt(df)
+  end
+
 
   @doc"""
   Input:  two vectors
@@ -193,9 +227,20 @@ defmodule Evolve.Maths do
     for x <- list, do: x - avg
   end
 
+  @doc"""
+  Input: observation list (y values from measurement) and prediction_list (y predictions)
+  Output: R^2 statistic
+  NB need to run function over x values to produce prediction list (predicted y values)
+  R^2 statistic measures the proportion of variability in Y that can be explained using X
+  """
+  def r_squared(observation_list, prediction_list) do
+    rss = prediction_list |> from_mean |> sum_of_squares
+    tss = observation_list |> from_mean |> sum_of_squares
+    1.0 - rss / tss
+  end
+
   def variance(list) do
-    n = length(list)
-    list |> from_mean |> sum_of_squares |> divide(n-1)
+    list |> from_mean |> sum_of_squares |> divide(length(list)-1)
   end
 
   def standard_deviation(list) do
@@ -206,9 +251,11 @@ defmodule Evolve.Maths do
     quantile(list,0.75) - quantile(list,0.25)
   end
 
+  @doc"""
+  covariance is a measure of how much two random variables change together
+  """
   def covariance(x,y) do
-    n = length(x)
-    dot(from_mean(x),from_mean(y)) |> divide(n-1)
+    dot(from_mean(x),from_mean(y)) |> divide(length(x)-1)
   end
 
   @doc"""
@@ -298,8 +345,46 @@ defmodule Evolve.Maths do
     {training,testing}
   end
 
+  @doc"""
+  fraction of correct predictions
+  """
+  def accuracy(true_positive, false_positive, false_negative, true_negative) do
+    correct = true_positive  + true_negative
+    total = correct + false_negative + false_positive
+    correct / total
+  end
 
+  @doc"""
+  how accurate positive predictions are
+  aka PPV positive predictive value
+  """
+  def precision(true_positive, false_positive) do
+    true_positive / (true_positive + false_positive)
+  end
 
+  @doc"""
+  what fraction of positives were identified
+  aka sensitivity, eg diseased probability
+  """
+  def recall(true_positive, false_negative) do
+    true_positive / (true_positive + false_negative)
+  end
+
+  @doc"""
+  specificity eg healthy probability
+  """
+  def specificity(false_positive, true_negative) do
+    true_negative / (false_positive + true_negative)
+  end
+
+  @doc"""
+  This is the F1 score
+  """
+  def f1_score(true_positive, false_positive, false_negative, true_negative) do
+    prec = precision(true_positive, false_positive)
+    rec = recall(true_positive, false_negative)
+    2 * prec * rec / (prec + rec)
+  end
 
 
 end

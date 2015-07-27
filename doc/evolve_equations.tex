@@ -35,9 +35,31 @@
 The code for following equations is located in lib/evolve/maths.ex
 
 \subsection{Linear Algebra}
-dot product for two vectors,
+dot product, ie inner product, for two vectors,
 \begin{align}
 \mathbf{A} \cdot \mathbf{B} = A^\dag B = \sum_i^n A_i * B_i
+\end{align}
+
+The Euclidean norm, or distance is defined as
+\begin{align}
+d_{euclid} (x,y) = \left( \sum_i^n (x_i - y_i)^2 \right)^{1/2}
+\end{align}
+The Minkowski distance is defined as
+\begin{align}
+d_{minkowski} (x,y,p) = \left( \sum_i^n |x_i - y_i|^{p} \right)^{1/p}
+\end{align}
+It is interesting to note when p is 1, the taxicab distance (L1 norm) is recovered and
+the L2 norm is recovered when p is 2.
+
+The Mahalanobis distance is defined as
+\begin{align}
+d_{mahalanobis} (x,y) = \left( \sum_i^n \frac{(x_i - y_i)^2}{s^2_i} \right)^{1/2} = \left( \sum_i^n \frac{(x_i - y_i)^2}{ \left(1/n *(x_i - \bar{x})*(y_i-\bar{y})\right)^2} \right)^{1/2}
+\end{align}
+
+The angle, in degrees, is defined
+
+\begin{align}
+\theta = \frac{\mathbf{v} \cdot \mathbf{w}}{||\mathbf{v}||*||\mathbf{w}||} * \frac{180}{\pi}
 \end{align}
 
 \subsection{Statistics}
@@ -51,6 +73,16 @@ where the mean, $\mu$, is defined as
 \mu = \frac{1}{n} \sum_i^n x_i
 \end{align}
 
+the sample covariance is measures how two vectors vary together,
+\begin{align}
+\bar{\bar{q}}= cov(x,y) = \frac{1}{n-1} \sum_i (x_i - \bar{x}) (y_i - \bar{y})
+\end{align}
+
+The reason the sample covariance matrix has $n-1$ in the denominator rather than $n$ is essentially that the population mean is not known and is replaced by the sample mean.
+
+
+
+
 \subsection{Probability}
  The normal probability distribution (normal\_pdf in code), the famous bell-shaped curve is
 defined as
@@ -61,7 +93,7 @@ and $\mu$ is again the mean.
 
 The beta distribution can be used for Bayesian inference (conditional probabilities) and is defined
 \begin{align}
-\mathrm{beta\_pdf} = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta}
+\mathrm{beta\_pdf} = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}
 \end{align}
 
 where $B(\alpha,\beta)$ is a normalization constant to ensure that the total probability integrates to 1.
@@ -74,16 +106,31 @@ This function uses the gamma function, which is the generalization of a factoria
 \Gamma(t) = \int_0^{\infty} x^{t-1} e^{-x} dx \approx  \sqrt{\frac{2\pi}{t}}\left(\frac{1}{e}\left(t + \frac{1}{12t -\frac{1}{10t}}\right)\right)^t
 \end{align}
 
-Note, especially for easy testing, positive integers should follow
+Note, especially for easy partial testing, positive integers should follow
 \begin{align}
 \Gamma(n)=(n-1)!
 \end{align}
 
 
-
-
-
 \subsection{Machine Learning}
+
+
+\subsubsection{Gradient Descent}
+A numerical approximation to the derivative of a function is given by the finite differences method,
+also known as the difference quotient is given by,
+
+\begin{align}
+f' = f'(x) = \frac{df(x)}{dx} \approx \frac{f(x+h) -f(x)}{h}
+\end{align}
+
+note that this method yields the total derivative of a function, not a partial derivative.
+Also can be made slightly more accurate easily.
+
+
+
+
+
+
 
 
 \end{document}

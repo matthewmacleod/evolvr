@@ -8,21 +8,6 @@ The evolve project goal is to create a massively parallel machine learning packa
 * various general machine learning techniques
 * and applies them to solve bioinformatic problems
 
-TODO
---------------
-* maths library
-* machine learning library
-* utilities -plotting interface eg to R
-* basic bioinformatic techniques
-* concurrency
-
-
-Running Tests
---------------
-type:
-
-           mix test
-
 
 Running Code
 --------------
@@ -33,6 +18,37 @@ Running Code
 * to run:
 
            ./evolve --input=input
+
+Running Tests
+--------------
+type:
+
+           mix test
+
+
+Code
+--------------
+see lib directory, eg
+
+    lib/evolve/maths.ex
+
+TODO
+--------------
+* maths library
+  * transpose
+  * matrix multiplication
+  * inverse
+  * linear solver, Ax=b
+* machine learning library
+  * linear model
+  * lasso
+  * ridge regression
+  * KNN
+  * k-means
+  * HMM
+* utilities -plotting interface eg to R
+* basic bioinformatic techniques
+* concurrency
 
 Documentation
 --------------
@@ -47,3 +63,7 @@ To generate project documentation with:
            mix docs
 
 to run doc tests:
+
+
+
+
