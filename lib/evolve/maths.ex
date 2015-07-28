@@ -40,15 +40,18 @@ defmodule Evolve.Maths do
   ## vectors ##
 
   def dot(v,w) do
-    sum(for {x,y} <- Enum.zip(v,w), do: x * y)
+    z = Enum.zip(v,w)
+    sum(Enum.map(z, fn({x,y}) -> x * y end))
   end
 
   def vector_add(v,w) do
-    for {x,y} <- Enum.zip(v,w), do: x + y
+    z = Enum.zip(v,w)
+    Enum.map(z, fn({x,y}) -> x + y end)
   end
 
   def vector_subtract(v,w) do
-    for {x,y} <- Enum.zip(v,w), do: x - y
+    z = Enum.zip(v,w)
+    Enum.map(z, fn({x,y}) -> x - y end)
   end
 
   @doc"""
