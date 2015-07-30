@@ -105,10 +105,14 @@ defmodule Evolve.Maths do
     magnitude(vector_subtract(v,w))
   end
 
+  def taxicab_distance(v,w) do
+    minkowski_distance(v,w,1)
+  end
+
   @doc"""
   Input:  two vectors and p parameter
   Output: distance
-  NB p = 1 reduces to Taxicab distance, L1 norm
+  NB p = 1 reduces to taxicab distance, aka manhattan distance, L1 norm
      p = 2 recover Euclidean distance, L2 norm
   """
   def minkowski_distance(v,w,p) do
@@ -401,8 +405,8 @@ defmodule Evolve.Maths do
   Input: a data list (vector keys and associated values), vector to match
   Output: the closest associated key value pair
   """
-  def find_nearest(list,vector) do
-    Enum.sort_by(list, fn {k,v} -> distance(k,vector) end)  |> Enum.take(1)
+  def find_nearest(list,vector, distance_function) do
+    Enum.sort_by(list, fn {k,v} -> distance_function.(k,vector) end)  |> Enum.take(1)
   end
 
 

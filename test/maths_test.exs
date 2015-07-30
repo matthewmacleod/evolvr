@@ -161,7 +161,12 @@ defmodule MathsTest do
 
   test "should find nearest neighbor" do
     # pattern match the output into more useable form
-    [{nearest_point, value}] = find_nearest(house,[10.0,10.0])
+    [{nearest_point, value}] = find_nearest(house,[10.0,10.0], &distance/2) # passing in euclidean distance
+    assert {nearest_point, value} == {[20.0, 14.0],0}
+  end
+
+  test "should find nearest neighbor with taxicab distance" do
+    [{nearest_point, value}] = find_nearest(house,[10.0,10.0], &taxicab_distance/2)
     assert {nearest_point, value} == {[20.0, 14.0],0}
   end
 
