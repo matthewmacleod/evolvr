@@ -31,6 +31,7 @@ defmodule Evolve.Maths do
     numerator / denominator
   end
 
+  # todo add memoization
   def factorial(n), do: factorial(n,1)
   defp factorial(0,acc), do: acc
   defp factorial(n,acc), do: factorial(n-1, acc*n)
@@ -82,8 +83,8 @@ defmodule Evolve.Maths do
   end
 
   @doc"""
-  Input: vector
-  Output:  ||v||, aka Euclidean norm
+  Input:  vector
+  Output: ||v||, aka Euclidean norm
   """
   def magnitude(v) do
     sqrt(sum_of_squares(v))
@@ -132,6 +133,13 @@ defmodule Evolve.Maths do
     sqrt(df)
   end
 
+  @doc"""
+  Input:  two vectors
+  Output: 1 if vectors are pointed in same direction
+  """
+  def cosine_similarity(v,w) do
+    dot(v,w) / (magnitude(v) * magnitude(w))
+  end
 
   @doc"""
   Input:  two vectors
@@ -343,9 +351,7 @@ defmodule Evolve.Maths do
 
   def create_data_partition(list,percentage) do
     p_index = round(percentage*length(list))
-    training = Enum.take(list,p_index)
-    testing = list -- training
-    {training,testing}
+    {training, testing} = Enum.split(list, p_index)
   end
 
   @doc"""
@@ -391,5 +397,3 @@ defmodule Evolve.Maths do
 
 
 end
-
-
