@@ -170,6 +170,11 @@ defmodule MathsTest do
     assert {nearest_point, value} == {[20.0, 14.0],0}
   end
 
+  test "should find k nearest neighbors with k of 3" do
+    ans = find_nearest_with_k(house,[10.0,10.0], &distance/2, 3) # passing in euclidean distance
+    assert ans == [{[20.0, 14.0], 0}, {[18.0, 1.0], 1}, {[3.0, 20.0], 0}]
+  end
+
 
 
 end

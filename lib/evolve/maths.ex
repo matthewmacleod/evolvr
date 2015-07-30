@@ -402,11 +402,21 @@ defmodule Evolve.Maths do
   ## KNN K nearest neighbors algorithms for classification ##
 
   @doc"""
-  Input: a data list (vector keys and associated values), vector to match
-  Output: the closest associated key value pair
+  Input: a data list (vector keys and associated values), vector to match, distance function/2
+  Output: KNN with K = 1 result, the closest associated key value pair
+  eg capture output:  [{nearest_point, value}] = find_nearest(house,[10.0,10.0], &taxicab_distance/2)
   """
-  def find_nearest(list,vector, distance_function) do
-    Enum.sort_by(list, fn {k,v} -> distance_function.(k,vector) end)  |> Enum.take(1)
+  def find_nearest(list, vector, distance_function) do
+    Enum.sort_by(list, fn {k,_v} -> distance_function.(k,vector) end)  |> Enum.take(1)
+  end
+
+  @doc"""
+  Input: a data list (vector keys and associated values), vector to match, distance function/2, k
+  Output: KNN with K = k result, the closest associated key value pair
+  eg capture output:  [{nearest_point, value}] = find_nearest(house,[10.0,10.0], &taxicab_distance/2)
+  """
+  def find_nearest_with_k(list, vector, distance_function, k) do
+    Enum.sort_by(list, fn {key,_v} -> distance_function.(key,vector) end)  |> Enum.take(k)
   end
 
 
