@@ -1,4 +1,5 @@
 import Evolve.Maths
+import Evolve.Data
 
 defmodule MathsTest do
   use ExUnit.Case, async: true
@@ -153,6 +154,16 @@ defmodule MathsTest do
     assert create_data_partition(list,0.6) == {training,testing}
   end
 
+  test "should import data dict" do
+    sorted = [{[3.0, 20.0], 0}, {[20.0, 14.0], 0}, {[18.0, 1.0], 1}, {[30.0, 30.0], 1}, {[35.0, 35.0], 1}, {[56.0, 2.0], 1}]
+    assert Enum.sort_by(house, fn {k,v} -> v end) == sorted
+  end
+
+  test "should find nearest neighbor" do
+    # pattern match the output into more useable form
+    [{nearest_point, value}] = find_nearest(house,[10.0,10.0])
+    assert {nearest_point, value} == {[20.0, 14.0],0}
+  end
 
 
 

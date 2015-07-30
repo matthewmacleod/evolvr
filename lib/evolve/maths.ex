@@ -347,7 +347,7 @@ defmodule Evolve.Maths do
   end
 
 
-  ### machine learning math ###
+  ### machine learning maths ###
 
   def create_data_partition(list,percentage) do
     p_index = round(percentage*length(list))
@@ -394,6 +394,17 @@ defmodule Evolve.Maths do
     rec = recall(true_positive, false_negative)
     2 * prec * rec / (prec + rec)
   end
+
+  ## KNN K nearest neighbors algorithms for classification ##
+
+  @doc"""
+  Input: a data list (vector keys and associated values), vector to match
+  Output: the closest associated key value pair
+  """
+  def find_nearest(list,vector) do
+    Enum.sort_by(list, fn {k,v} -> distance(k,vector) end)  |> Enum.take(1)
+  end
+
 
 
 end
