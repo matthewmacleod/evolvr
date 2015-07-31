@@ -60,7 +60,7 @@ defmodule Evolve.Maths do
   Output: componentwise sum of all vectors
   """
   def vector_sum(vectors) do
-    Enum.reduce(vectors, fn(x, acc) -> acc = vector_add(x,acc) end)
+    Enum.reduce(vectors, fn(x, acc) -> vector_add(x,acc) end)
   end
 
   # scale vector
@@ -359,18 +359,18 @@ defmodule Evolve.Maths do
   end
 
 
-  def binary_search(p,low_z,low_p,hi_z,hi_p,tolerance), do: bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, hi_z + low_z / 2, hi_z - low_z)
+  def binary_search(p,low_z,low_p,hi_z,hi_p,tolerance, probability_function), do: bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, probability_function, hi_z + low_z / 2, hi_z - low_z)
 
-  defp bin_search(_p,_low_z,_low_p,_hi_z,_hi_p,tolerance, mid_z, current_val) when current_val < tolerance, do: mid_z
+  defp bin_search(_p, _low_z, _low_p, _hi_z, _hi_p, tolerance, _probability_function, mid_z, current_val) when current_val < tolerance, do: mid_z
 
-  defp bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, _mid_z, _current_val) do
+  defp bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, probability_function, _mid_z, _current_val) do
     mid_z = (low_z + hi_z) / 2
-    mid_p = normal_cdf(mid_z, 0, 1) # todo want to throw any function in here
+    mid_p = probability_function.(mid_z,0,1) # todo pass args too?
     cond do
       mid_p < p -> {low_z, low_p} = {mid_z, mid_p}
       mid_p >= p -> {hi_z, hi_p} = {mid_z, mid_p}
     end
-    bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, mid_z, hi_z - low_z)
+    bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, probability_function, mid_z, hi_z - low_z)
   end
 
   @doc"""
@@ -382,10 +382,10 @@ defmodule Evolve.Maths do
   #NB if mu or sigma are not 0 or 1, respectively then rescale
   def inverse_normal_cdf(p,mu,sigma,tolerance) when mu != 0 or sigma != 1, do: mu + sigma * inverse_normal_cdf(p,mu,sigma,tolerance)
 
-  def inverse_normal_cdf(p,mu,sigma,tolerance) do
+  def inverse_normal_cdf(p,_mu,_sigma,tolerance) do
     {low_z, low_p} = {-10.0, 0}
     {hi_z, hi_p} =   { 10.0, 1}
-    binary_search(p,low_z,low_p,hi_z,hi_p,tolerance)
+    binary_search(p, low_z, low_p, hi_z, hi_p, tolerance, &normal_cdf/3)
   end
 
 
@@ -394,7 +394,7 @@ defmodule Evolve.Maths do
 
   def create_data_partition(list,percentage) do
     p_index = round(percentage*length(list))
-    {training, testing} = Enum.split(list, p_index)
+    {_training, _testing} = Enum.split(list, p_index)
   end
 
   @doc"""
@@ -432,7 +432,7 @@ defmodule Evolve.Maths do
   @doc"""
   This is the F1 score
   """
-  def f1_score(true_positive, false_positive, false_negative, true_negative) do
+  def f1_score(true_positive, false_positive, false_negative, _true_negative) do
     prec = precision(true_positive, false_positive)
     rec = recall(true_positive, false_negative)
     2 * prec * rec / (prec + rec)
