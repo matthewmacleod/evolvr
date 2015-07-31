@@ -322,8 +322,8 @@ defmodule Evolve.Maths do
   end
 
   @doc"""
-  Input: number
-  Output: value in normal cumulative distribution function
+  Input: number (x)
+  Output: value in normal cumulative distribution function, eg probability (y)
   NB exp, pow, sqrt, erf are from erlang
      erf(X) = 2/sqrt(pi)*integral from 0 to X of exp(-t*t) dt.
   """
@@ -357,6 +357,37 @@ defmodule Evolve.Maths do
      x > 0 && x < 1 -> pow(x,alpha-1) * pow((1-x),(beta-1)) / beta_factor(alpha, beta)
     end
   end
+
+
+  def binary_search(p,low_z,low_p,hi_z,hi_p,tolerance), do: bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, hi_z + low_z / 2, hi_z - low_z)
+
+  defp bin_search(_p,_low_z,_low_p,_hi_z,_hi_p,tolerance, mid_z, current_val) when current_val < tolerance, do: mid_z
+
+  defp bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, _mid_z, _current_val) do
+    mid_z = (low_z + hi_z) / 2
+    mid_p = normal_cdf(mid_z, 0, 1) # todo want to throw any function in here
+    cond do
+      mid_p < p -> {low_z, low_p} = {mid_z, mid_p}
+      mid_p >= p -> {hi_z, hi_p} = {mid_z, mid_p}
+    end
+    bin_search(p, low_z, low_p, hi_z, hi_p, tolerance, mid_z, hi_z - low_z)
+  end
+
+  @doc"""
+  Input: p (probability, y)
+  Output: x
+  NB This technique is know as inverse since want to invert the normal_cdf, ie given a probability (y), what is x
+  uses a binary search algorithm
+  """
+  #NB if mu or sigma are not 0 or 1, respectively then rescale
+  def inverse_normal_cdf(p,mu,sigma,tolerance) when mu != 0 or sigma != 1, do: mu + sigma * inverse_normal_cdf(p,mu,sigma,tolerance)
+
+  def inverse_normal_cdf(p,mu,sigma,tolerance) do
+    {low_z, low_p} = {-10.0, 0}
+    {hi_z, hi_p} =   { 10.0, 1}
+    binary_search(p,low_z,low_p,hi_z,hi_p,tolerance)
+  end
+
 
 
   ### machine learning maths ###

@@ -135,10 +135,6 @@ defmodule MathsTest do
     assert Float.round(normal_pdf(0,0,1),4) == 0.3989
   end
 
-  test "should return normal cumulative distribution value" do
-    assert normal_cdf(0,0,1) == 0.5
-  end
-
   test "should return gamma function value" do
     #assert gamma(0.5) == :math.sqrt(:math.pi)
     assert Float.round(gamma(9+1),4) == factorial(9)
@@ -148,6 +144,14 @@ defmodule MathsTest do
     assert Float.round(beta_pdf(0.5,2,2),4) == 1.5
   end
 
+  test "should return normal cumulative distribution value" do
+    assert normal_cdf(0,0,1) == 0.5
+  end
+
+  test "should return inverse cdf value" do
+    #assert Float.round(inverse_normal_cdf(0.5,0,1,0.0001),3) == 0.0
+    assert Float.round(inverse_normal_cdf(0.758,0,1,0.0001),3) == 0.7
+  end
 
   ### machine learning tests ###
 
