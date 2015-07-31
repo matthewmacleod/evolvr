@@ -50,7 +50,11 @@ defmodule MathsTest do
   end
 
   test "should return distance between vectors" do
-    assert distance([0,0,0],[0,3,4]) == 5
+    assert distance([1,1],[4,5]) == 5.0
+  end
+
+  test "should return taxicab distance between vectors" do
+    assert taxicab_distance([1,1],[4,5]) == 7
   end
 
   test "should return minkowoski distance between vectors" do

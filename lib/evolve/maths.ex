@@ -105,8 +105,16 @@ defmodule Evolve.Maths do
     magnitude(vector_subtract(v,w))
   end
 
+  @doc"""
+  Input:  two vectors
+  Output: taxicab, aka manhattan distance
+  The distance between two points measured along axes at right angles,
+  In a plane with p1 at (x1, y1) and p2 at (x2, y2), it is |x1 - x2| + |y1 - y2|
+  Also known as rectilinear distance, Minkowski's L1 distance, taxi cab metric, or city block distance.
+  Hamming distance can be seen as Manhattan distance between bit vectors
+  """
   def taxicab_distance(v,w) do
-    magnitude(for {x,y} <- Enum.zip(v,w), do: abs(x - y))
+    sum(for {x,y} <- Enum.zip(v,w), do: abs(x - y))
   end
 
   @doc"""
