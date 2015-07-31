@@ -106,7 +106,7 @@ defmodule Evolve.Maths do
   end
 
   def taxicab_distance(v,w) do
-    minkowski_distance(v,w,1)
+    magnitude(for {x,y} <- Enum.zip(v,w), do: abs(x - y))
   end
 
   @doc"""

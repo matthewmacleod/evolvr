@@ -156,7 +156,7 @@ defmodule MathsTest do
 
   test "should import data dict" do
     sorted = [{[3.0, 20.0], 0}, {[20.0, 14.0], 0}, {[18.0, 1.0], 1}, {[30.0, 30.0], 1}, {[35.0, 35.0], 1}, {[56.0, 2.0], 1}]
-    assert Enum.sort_by(house, fn {k,v} -> v end) == sorted
+    assert Enum.sort_by(house, fn {_k,v} -> v end) == sorted
   end
 
   test "should find nearest neighbor" do
@@ -171,8 +171,7 @@ defmodule MathsTest do
   end
 
   test "should find k nearest neighbors with k of 3" do
-    ans = find_nearest_with_k(house,[10.0,10.0], &distance/2, 3) # passing in euclidean distance
-    assert ans == [{[20.0, 14.0], 0}, {[18.0, 1.0], 1}, {[3.0, 20.0], 0}]
+    assert find_nearest_with_k(house,[10.0,10.0], &distance/2, 3) == [{[20.0, 14.0], 0}, {[18.0, 1.0], 1}, {[3.0, 20.0], 0}]
   end
 
 
