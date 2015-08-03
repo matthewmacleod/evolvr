@@ -1,7 +1,7 @@
 import Evolve.Basics
 
 defmodule BasicsTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   ### basic tests ###
 

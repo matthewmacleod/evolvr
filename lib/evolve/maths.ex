@@ -11,6 +11,7 @@ defmodule Evolve.Maths do
 
   # nb erlang import, has pi,log,log2,log10,exp,pow,...etc
   import :math
+  import Parallel
 
   ### basic maths ###
 
@@ -42,7 +43,9 @@ defmodule Evolve.Maths do
 
   def dot(v,w) do
     z = Enum.zip(v,w)
-    sum(Enum.map(z, fn({x,y}) -> x * y end))
+    #sum(Enum.map(z, fn({x,y}) -> x * y end))
+    # use our pmap
+    sum(pmap(z, fn({x,y}) -> x * y end))
   end
 
   def vector_add(v,w) do
