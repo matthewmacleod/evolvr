@@ -19,18 +19,39 @@ Running Code
 
            ./evolve --input=input
 
+* to run interactively,
+
+         iex
+
+Load libraries
+
+         iex(1)> c("parallel.ex")
+
+         iex(2)> c("maths.ex")
+
+Now can use functions
+
+         Evolve.Maths.factorial(5)
+
+         Evolve.Maths.factorial(1000)
+
+
+
+
 Running Tests
 --------------
 type:
 
            mix test
 
+this will run both unit tests and doctests.
 
 Code
 --------------
 see lib directory, eg
 
-    lib/evolve/maths.ex
+      lib/evolve/maths.ex
+
 
 TODO
 --------------
@@ -61,9 +82,6 @@ Instructions for compling are inside tex file.
 To generate project documentation with:
 
            mix docs
-
-to run doc tests:
-
 
 
 

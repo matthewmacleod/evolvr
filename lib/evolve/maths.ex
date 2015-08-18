@@ -33,6 +33,17 @@ defmodule Evolve.Maths do
   end
 
   # todo add memoization
+  @doc"""
+    Input: n where n is whole number
+
+    ## Examples
+
+    iex> Evolve.Maths.factorial(5)
+    120
+
+    iex> Evolve.Maths.factorial(100)
+    93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+  """
   def factorial(n), do: factorial(n,1)
   defp factorial(0,acc), do: acc
   defp factorial(n,acc), do: factorial(n-1, acc*n)
@@ -50,12 +61,14 @@ defmodule Evolve.Maths do
 
   def vector_add(v,w) do
     z = Enum.zip(v,w)
-    Enum.map(z, fn({x,y}) -> x + y end)
+    #Enum.map(z, fn({x,y}) -> x + y end)
+    pmap(z, fn({x,y}) -> x + y end)
   end
 
   def vector_subtract(v,w) do
     z = Enum.zip(v,w)
-    Enum.map(z, fn({x,y}) -> x - y end)
+    #Enum.map(z, fn({x,y}) -> x - y end)
+    pmap(z, fn({x,y}) -> x - y end)
   end
 
   @doc"""
@@ -68,7 +81,8 @@ defmodule Evolve.Maths do
 
   # scale vector
   def scalar_multiply(constant, v) do
-    Enum.map(v, &(&1 * constant))
+    #Enum.map(v, &(&1 * constant))
+    pmap(v, &(&1 * constant))
   end
 
   @doc"""
@@ -128,7 +142,8 @@ defmodule Evolve.Maths do
   """
   def minkowski_distance(v,w,p) do
     df = for {x,y} <- Enum.zip(v,w), do: abs(x - y)
-    a = sum(Enum.map(df, fn(x) -> pow(x,p) end))
+    #a = sum(Enum.map(df, fn(x) -> pow(x,p) end))
+    a = sum(pmap(df, fn(x) -> pow(x,p) end))
     pow(a, 1/p)
   end
 

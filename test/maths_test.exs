@@ -3,6 +3,7 @@ import Evolve.Data
 
 defmodule MathsTest do
   use ExUnit.Case, async: true
+  doctest Evolve.Maths
 
   ### basic tests ###
   import :math
