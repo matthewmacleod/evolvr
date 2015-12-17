@@ -71,6 +71,13 @@ TODO
 * basic bioinformatic techniques
 * concurrency
 
+License
+--------------
+
+see file:
+
+    license.txt
+
 Documentation
 --------------
 Equations for project are located in
