@@ -1,10 +1,10 @@
-defmodule Evolve.Mixfile do
+defmodule Evolvr.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :evolve,
+    [app: :evolvr,
      version: "0.0.1",
-     name: "Evolve",
+     name: "Evolvr",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -18,7 +18,7 @@ defmodule Evolve.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: [:logger],
-     mod: {Evolve, []}]
+     mod: {Evolvr, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -37,6 +37,6 @@ defmodule Evolve.Mixfile do
   end
 
   defp escript_config do
-    [ main_module: Evolve.CLI ]
+    [ main_module: Evolvr.CLI ]
   end
 end

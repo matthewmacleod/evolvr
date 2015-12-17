@@ -1,4 +1,4 @@
-import Evolve.Basics
+import Evolvr.Basics
 
 defmodule BasicsTest do
   use ExUnit.Case, async: true

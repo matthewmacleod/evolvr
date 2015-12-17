@@ -1,10 +1,10 @@
-Evolve
+Evolvr
 ======
 
 Introduction
 --------------
 
-The evolve project goal is to create a massively parallel machine learning package which utilizes
+The evolvr project goal is to create a machine learning package which utilizes
 * various general machine learning techniques
 * and applies them to solve bioinformatic problems
 
@@ -17,7 +17,7 @@ Running Code
 
 * to run:
 
-           ./evolve --input=input
+           ./evolvr --input=input
 
 * to run interactively,
 
@@ -31,9 +31,9 @@ Load libraries
 
 Now can use functions
 
-         Evolve.Maths.factorial(5)
+         Evolvr.Maths.factorial(5)
 
-         Evolve.Maths.factorial(1000)
+         Evolvr.Maths.factorial(1000)
 
 
 
@@ -50,7 +50,7 @@ Code
 --------------
 see lib directory, eg
 
-      lib/evolve/maths.ex
+      lib/evolvr/maths.ex
 
 
 TODO
@@ -75,13 +75,53 @@ Documentation
 --------------
 Equations for project are located in
 
-        doc/evolve_equations.tex
+        doc/evolvr_equations.tex
 
 Instructions for compling are inside tex file.
 
 To generate project documentation with:
 
            mix docs
+
+
+Notebook
+--------------
+as root:
+
+    dnf install npm
+
+as normal user:
+
+    virtualenv -p /usr/bin/python3 notes
+
+    cd notes
+
+    source ./bin/activate
+
+    git clone https://github.com/jupyter/notebook.git
+
+    cd notebook
+
+    ../bin/pip install --pre -e .
+
+    ../bin/pip install jupyter-console
+
+    git clone https://github.com/pprzetacznik/IElixir.git
+
+    cd IElixir
+
+    mix deps.get
+
+    mix test
+
+    MIX_ENV=prod mix compile
+
+    mkdir -p ~/.ipython/kernels/ielixir
+
+    ./install_script.sh
+
+     jupyter notebook resources/example.ipynb
+
 
 
 

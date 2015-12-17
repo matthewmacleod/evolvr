@@ -1,4 +1,4 @@
-import Evolve.Parallel
+import Evolvr.Parallel
 
 defmodule ParallelTest do
   use ExUnit.Case, async: true

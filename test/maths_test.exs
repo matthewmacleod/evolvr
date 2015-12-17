@@ -1,9 +1,9 @@
-import Evolve.Maths
-import Evolve.Data
+import Evolvr.Maths
+import Evolvr.Data
 
 defmodule MathsTest do
   use ExUnit.Case, async: true
-  doctest Evolve.Maths
+  doctest Evolvr.Maths
 
   ### basic tests ###
   import :math

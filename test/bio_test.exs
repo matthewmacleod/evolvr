@@ -1,5 +1,5 @@
 
-import Evolve.Bio
+import Evolvr.Bio
 
 defmodule BioTest do
   use ExUnit.Case, async: true
