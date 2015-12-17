@@ -6,7 +6,7 @@ Introduction
 
 The evolvr project goal is to create a machine learning package which utilizes
 * various general machine learning techniques
-* explores concurrency
+* concurrency
 
 
 Running Code
